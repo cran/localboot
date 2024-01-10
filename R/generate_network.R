@@ -1,9 +1,9 @@
 # Define the formula to generate p matrix of graphon1
-graphon1 <- function(u, size){
+graphon3 <- function(u, size){
   p_matrix = matrix(0,nrow=size,ncol=size)
   for(i in 1:size){
     for(j in 1:size){
-      p <- cos(pi*(u[i]-u[j]))/(2^3) + 0.5
+      p <- sin(((u[i]^2+u[j]^2)^(1/4))*0.01)/2 +0.5
       p_matrix[i,j] <- p    
     }
   }
@@ -11,11 +11,11 @@ graphon1 <- function(u, size){
 }
 
 # Define the formula to generate p matrix of graphon2
-graphon2 <- function(u, size){
+graphon6 <- function(u, size){
   p_matrix = matrix(0,nrow=size,ncol=size)
   for(i in 1:size){
     for(j in 1:size){
-      p <- cos(pi*(u[i]-u[j]))/(2^3) + 0.5
+      p <- sin(((u[i]^2+u[j]^2)^(1/4))*10)/2 +0.5
       p_matrix[i,j] <- p    
     }
   }
@@ -23,7 +23,7 @@ graphon2 <- function(u, size){
 }
 
 # Define the formula to generate p matrix of graphon3
-graphon3 <- function(u, size){
+graphon1 <- function(u, size){
   p_matrix = matrix(0,nrow=size,ncol=size)
   for(i in 1:size){
     for(j in 1:size){
@@ -38,7 +38,7 @@ graphon4 <- function(u, size){
   p_matrix = matrix(0,nrow=size,ncol=size)
   for(i in 1:size){
     for(j in 1:size){
-      p <- cos(pi*(u[i]-u[j]))/(2^3) + 0.5
+      p <- cos(pi*(u[i]-u[j]))/(2) + 0.5
       p_matrix[i,j] <- p    
     }
   }
@@ -46,24 +46,34 @@ graphon4 <- function(u, size){
 }
 
 # Define the formula to generate p matrix of graphon5
-graphon5 <- function(u, size){
+graphon2 <- function(u, size){
   p_matrix = matrix(0,nrow=size,ncol=size)
+  s = 8
   for(i in 1:size){
     for(j in 1:size){
-      p <- cos(pi*(u[i]-u[j]))/(2^3) + 0.5
-      p_matrix[i,j] <- p    
+      if(u[i]>=u[j]){
+        p = sin((s*u[i]-s/2)*sin(s*u[j]-s/2))
+      }else{
+        p = sin((s*u[j]-s/2)*sin(s*u[i]-s/2))
+      }
+      p_matrix[i,j] <-  (p+1)/2
     }
   }
   p_matrix
 }
 
 # Define the formula to generate p matrix of graphon6
-graphon6 <- function(u, size){
+graphon5 <- function(u, size){
   p_matrix = matrix(0,nrow=size,ncol=size)
+  s = 10
   for(i in 1:size){
     for(j in 1:size){
-      p <- cos(pi*(u[i]-u[j]))/(2^3) + 0.5
-      p_matrix[i,j] <- p    
+      if(u[i]>=u[j]){
+        p = sin((s*u[i]-s/2)*sin(s*u[j]-s/2))
+      }else{
+        p = sin((s*u[j]-s/2)*sin(s*u[i]-s/2))
+      }
+      p_matrix[i,j] <- (p+1)/2
     }
   }
   p_matrix
@@ -71,11 +81,21 @@ graphon6 <- function(u, size){
 
 # Function to generate sub-network from real network, labeled as 7
 graphon7 <- function(u,size){
+  #read real data
+  RDS_path <- system.file("rds", "rattus_norvegicus_brain_3_adj.RDS", package = "localboot")
+  P <- readRDS(RDS_path)
+  node_samples <- sample(1:NROW(P),size,replace = TRUE)
+  P[node_samples,node_samples]
 }
 
 
 # Function to generate sub-network from real network, labeled as 8
 graphon8 <- function(u,size){
+  #read real data
+  RDS_path <- system.file("rds", "email_Eu_core_adj.RDS", package = "localboot")
+  P <- readRDS(RDS_path)
+  node_samples <- sample(1:NROW(P),size,replace = TRUE)
+  P[node_samples,node_samples]
 }
 
 
@@ -118,6 +138,8 @@ generate_graphon <- function(size, graph_num = 1,sampling_on_u=TRUE,u_input=NULL
                            "4" = graphon4(u, size),
                            "5" = graphon5(u, size),
                            "6" = graphon6(u, size),
+                           "7" = graphon7(u, size),
+                           "8" = graphon8(u, size),
                            stop("Invalid graph_num: should be between 1 and 6"))
   return(p_matrix)
 

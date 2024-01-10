@@ -1,8 +1,8 @@
 Package: localboot
 Type: Package
 Title: Local Bootstrap Methods for Various Networks
-Version: 0.9.1
-Date: 2023-12-18
+Version: 0.9.2
+Date: 2024-01-08
 Authors@R: c(
     person("Tianhai", "Zu", email = "zuti@mail.uc.edu", role = c("aut", "cre")),
     person("Yichen", "Qin", email = "qinyn@ucmail.uc.edu", role = c("aut","ctb"))
@@ -21,9 +21,9 @@ LinkingTo: Rcpp (>= 1.0.11), RcppEigen
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 NeedsCompilation: yes
-Packaged: 2023-12-21 06:21:26 UTC; tianhaizu
+Packaged: 2024-01-09 23:36:45 UTC; tianhaizu
 Author: Tianhai Zu [aut, cre],
   Yichen Qin [aut, ctb]
 Maintainer: Tianhai Zu <zuti@mail.uc.edu>
 Repository: CRAN
-Date/Publication: 2023-12-21 16:30:02 UTC
+Date/Publication: 2024-01-10 11:33:21 UTC
